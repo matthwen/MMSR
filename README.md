@@ -8,8 +8,7 @@ to download the repo and then
 
     %cd MMSR
 
-    !python experiment.py 
-    working_config.json
+    !python experiment.py working_config.json
 
 of course data needs to be uploaded in colab and referenced in the config file which i guess needs to be edited outside of colab, maybe i can find a better solution but it seems as it could be done soewhat comfortably in colab as well
 
