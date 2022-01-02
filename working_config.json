@@ -1,0 +1,26 @@
+{
+  "data_files": {
+    "metadata_train": "MMSR_2021_dataset/features/Metadata/dev_metadata.csv",
+    "metadata_test": "MMSR_2021_dataset/features/Metadata/test_metadata.csv",
+    "tags_train": "MMSR_2021_dataset/features/Metadata/dev_tags.csv",
+    "youtube_urls": "MMSR_2021_dataset/features/Metadata/id_youtube.csv",
+    "vgg_raw": "MMSR_2021_dataset/features/Video/VGG19",
+    "vgg_agg": "MMSR_2021_dataset/features/Video/id_vgg19_agg.csv"
+  },
+  "files_to_merge": [
+  ],
+  "scorer": "mse",
+  "proba_threshold": 0.1,
+  "multi_output": false,
+  "predict_popularity": false,
+  "random_seed": 42,
+  "model": "dummy",
+  "model_params": {
+  },
+  "downproject": false,
+  "dp_with_metadata": false,
+  "downprojection_model": "pca",
+  "downprojection_params": {
+    "n_components": 10
+  }
+}
