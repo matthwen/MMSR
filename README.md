@@ -21,7 +21,7 @@ since comments are not a thing in json here is the doc for the conbfig params:
 
 "data_files": the paths for all the possible files, you can alter the paths to existing files if you have them in a different location or add new files (eg. BOF or word vectors)
 
-"files_to_merge": list of files you want to be merged (can be empty) with the basic metadata. ATTENTION: need to be in csv format (for now) and have an "ID" column
+"files_to_merge": list of files you want to be merged (can be empty) with the basic metadata. Use the name of the files specified in "data_files" eg. "vgg_agg" for the aggregated video data (so before you can merge them add the paths to "data_files") ATTENTION: need to be in csv format (for now) and have an "ID" column
 
 "scorer": dead arameter, just iognore at the moment, it allways uses f1 for genres and mse for popularity
 
