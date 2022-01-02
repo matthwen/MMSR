@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import MultiLabelBinarizer
 import numpy as np
 import base.utils as utils
-from sklearn.preprocessing import MinMaxScaler,StandardScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 def main(data_files, files_to_merge, multi_output, scorer, model, model_params, downproject=False,
@@ -27,7 +27,7 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
         cols = ["danceability", "energy", "key", "mode", "valence", "tempo", "duration_ms"]
         data_train[cols] = StandardScaler().fit_transform(data_train[cols])
 
-    # TODO support more than csv? how to merge?
+    # only csv, prepare data accordingly
     data_train_add = data_train_ids.copy()
     for file_name in files_to_merge:
         df = pd.read_csv(data_files[file_name])
@@ -53,7 +53,7 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
     else:
         data_train = data_train.merge(data_train_add, on="ID")
 
-    # TODO one hot, maybe?
+    # just ignore instead of one-hot, net helping with generalization
     data_train = data_train.loc[:, ~data_train.columns.isin(["ID", "artist", "song", "album", "popularity"])]
     data_test = data_test.loc[:, ~data_test.columns.isin(["ID", "artist", "song", "album"])]
 

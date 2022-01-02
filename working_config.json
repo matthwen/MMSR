@@ -5,19 +5,24 @@
     "tags_train": "MMSR_2021_dataset/features/Metadata/dev_tags.csv",
     "youtube_urls": "MMSR_2021_dataset/features/Metadata/id_youtube.csv",
     "vgg_raw": "MMSR_2021_dataset/features/Video/VGG19",
-    "vgg_agg": "MMSR_2021_dataset/features/Video/id_vgg19_agg.csv"
+    "vgg_agg": "MMSR_2021_dataset/features/Video/id_vgg19_agg.csv",
+    "video_codebook_200": "codebook_200.csv",
+    "video_codebook_50": "codebook_50.csv",
+    "video_codebook_10": "codebook_10.csv"
   },
   "files_to_merge": [
+    "vgg_agg"
   ],
   "scorer": "mse",
   "proba_threshold": 0.1,
   "multi_output": false,
   "predict_popularity": false,
   "random_seed": 42,
-  "model": "dummy",
+  "model": "random_forest",
   "model_params": {
   },
-  "downproject": false,
+  "scale_metadata": true,
+  "downproject": true,
   "dp_with_metadata": false,
   "downprojection_model": "pca",
   "downprojection_params": {
