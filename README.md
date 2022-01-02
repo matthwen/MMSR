@@ -11,20 +11,20 @@ to download the repo and then
 
     !python experiment.py working_config.json
 
-of course data needs to be uploaded in colab and referenced in the config file which i guess needs to be edited outside of colab, maybe i can find a better solution but it seems as it could be done soewhat comfortably in colab as well
+of course data needs to be uploaded in colab and referenced in the config file which i guess needs to be edited outside of colab, maybe i can find a better solution but it seems as it could be done somewhat comfortably in colab as well
 
-of yourse you can run it also locally via commandline if you do the steps above if you have git installed (otherwise just download the files from github), just remove the "!"s and "%" that prefix the lines and it should work
+of course you can run it also locally via commandline if you do the steps above if you have git installed (otherwise just download the files from github), just remove the "!"s and "%" that prefix the lines and it should work
 
-running it via pycharm or whatever python ide you like is of course also an option, just make sure you include "working_config.json" without the " in your unning config for exeriment.py
+running it via pycharm or whatever python ide you like is of course also an option, just make sure you include "working_config.json" without the " in your running config for experiment.py
 
 #Parameter documentation
-since comments are not a thing in json here is the doc for the conbfig params:
+since comments are not a thing in json here is the doc for the config params:
 
 "data_files": the paths for all the possible files, you can alter the paths to existing files if you have them in a different location or add new files (eg. BOF or word vectors)
 
 "files_to_merge": list of files you want to be merged (can be empty) with the basic metadata. Use the name of the files specified in "data_files" eg. "vgg_agg" for the aggregated video data (so before you can merge them add the paths to "data_files") ATTENTION: need to be in csv format (for now) and have an "ID" column
 
-"scorer": dead arameter, just iognore at the moment, it allways uses f1 for genres and mse for popularity
+"scorer": dead parameter, just ignore at the moment, it always uses f1 (with average="weighted") for genres and mse for popularity
 
 "proba_threshold": probabilistic threshold for when a genre is predicted
 
@@ -32,7 +32,7 @@ since comments are not a thing in json here is the doc for the conbfig params:
 
 "predict_popularity": if you want the popularity regression, if false it does genre classification
 
-"random_seed": random seed for reproducability,
+"random_seed": random seed for reproducibility,
 
 "model": the name of the model, following options exist:
 
