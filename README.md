@@ -47,7 +47,7 @@ since comments are not a thing in json here is the doc for the conbfig params:
     "knn_regressor": KNN.KNNRegressor,
     "dummy": Dummy.Dummy
 
-"model_params": parameter dictionary for your model, just use the parameter names of the sklearn models as keys eg. {n_estimators=100} for random forests, every parameter not specified in the dict will be sklearn default
+"model_params": parameter dictionary for your model, just use the parameter names of the sklearn models as keys eg. {"n_estimators":100} for random forests, every parameter not specified in the dict will be sklearn default
 
 "downproject": true for downprojecting the data with eg. pca
 
