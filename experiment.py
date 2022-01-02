@@ -89,14 +89,14 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
 
 if __name__ == '__main__':
     import argparse
-import json
+    import json
 
-parser = argparse.ArgumentParser()
-parser.add_argument('config_file', help='path to config file', type=str)
-args = parser.parse_args()
-config_file = args.config_file
+    parser = argparse.ArgumentParser()
+    parser.add_argument('config_file', help='path to config file', type=str)
+    args = parser.parse_args()
+    config_file = args.config_file
 
-with open(config_file, 'r') as fh:
-    config = json.load(fh)
+    with open(config_file, 'r') as fh:
+        config = json.load(fh)
 
-main(**config)
+    main(**config)
