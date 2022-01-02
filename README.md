@@ -53,6 +53,8 @@ since comments are not a thing in json here is the doc for the config params:
 
 "model_params": parameter dictionary for your model, just use the parameter names of the sklearn models as keys eg. {"n_estimators":100} for random forests, every parameter not specified in the dict will be sklearn default
 
+"scale_metadata": scale metadata using sklearn standard scaler (https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
+
 "downproject": true for downprojecting the data with eg. pca
 
 "dp_with_metadata": true if added data like BOFs should be downprojected together with the metadata, false only downprojects the added data and leaves the metadata as is

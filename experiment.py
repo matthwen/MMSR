@@ -2,11 +2,12 @@ import pandas as pd
 from sklearn.preprocessing import MultiLabelBinarizer
 import numpy as np
 import base.utils as utils
+from sklearn.preprocessing import MinMaxScaler,StandardScaler
 
 
 def main(data_files, files_to_merge, multi_output, scorer, model, model_params, downproject=False,
          downprojection_model=None, downprojection_params={}, dp_with_metadata=False, proba_threshold=0.5,
-         predict_popularity=False, random_seed=None):
+         predict_popularity=False, random_seed=None, scale_metadata=False):
     if random_seed is not None:
         np.random.seed(random_seed)
 
@@ -21,6 +22,10 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
     y_tags = multilabel_binarizer.fit_transform(tags_train["tags"])
     tags_train["y"] = y_tags.tolist()
     y_pop = data_train["popularity"].to_numpy()
+
+    if scale_metadata:
+        cols = ["danceability", "energy", "key", "mode", "valence", "tempo", "duration_ms"]
+        data_train[cols] = StandardScaler().fit_transform(data_train[cols])
 
     # TODO support more than csv? how to merge?
     data_train_add = data_train_ids.copy()
