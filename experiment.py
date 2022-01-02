@@ -1,10 +1,6 @@
-import os
-import glob
 import pandas as pd
 from sklearn.preprocessing import MultiLabelBinarizer
 import numpy as np
-
-import torch
 import base.utils as utils
 
 
@@ -57,15 +53,10 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
     data_test = data_test.loc[:, ~data_test.columns.isin(["ID", "artist", "song", "album"])]
 
     # TODO
-    # scorer = sklearn.metrics.log_loss #needs work inside cv function of model base
+    ####
     X_pred = []
     y_pred = None
     ####
-
-    # model = clf_base = DummyClassifier()
-    # model = clf_base = utils.get_model("dummy", {"strategy": "stratified"})
-    # model = clf_base = utils.get_model("svm",{"probability":True})
-    # model = clf_base = utils.get_model("logistic_regression",{"max_iter":1000})
 
     clf_base = utils.get_model(model, model_params)
 
@@ -81,6 +72,7 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
     model.set_data(X_train, X_pred, y_train, y_pred, predict_popularity)
     # always use 5 fold as in assignment
     # Attention: uses predict_proba and just errors if model does not support it
+    # TODO ensure class distribution between train and test?
     score, filename = model.cross_validate(scoring=scorer, proba_threshold=proba_threshold,
                                            regression=predict_popularity)
     print(f"mean cv score: {score}")

@@ -93,7 +93,7 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
                 y_pred = clf.predict_proba(X_test) >= proba_threshold
 
                 # score = scorer(y_pred, y_test)
-                score = metrics.f1_score(y_pred, y_test, average='weighted')
+                score = metrics.f1_score(y_pred, y_test, average='weighted', zero_division=0)
             else:
                 y_pred = clf.predict(X_test)
                 score = metrics.mean_squared_error(y_pred, y_test)
