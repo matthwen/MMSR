@@ -2,7 +2,8 @@
 
 #Run the experiment
 I just tested it in colab and you can use it by just
-!git clone https://github.com/matthwen/MMSR
+
+    !git clone https://github.com/matthwen/MMSR
 
 to download the repo and then
 
