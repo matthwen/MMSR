@@ -14,6 +14,7 @@ to download the repo and then
 of course data needs to be uploaded in colab and referenced in the config file which i guess needs to be edited outside of colab, maybe i can find a better solution but it seems as it could be done soewhat comfortably in colab as well
 
 of yourse you can run it also locally via commandline if you do the steps above if you have git installed (otherwise just download the files from github), just remove the "!"s and "%" that prefix the lines and it should work
+
 running it via pycharm or whatever python ide you like is of course also an option, just make sure you include "working_config.json" without the " in your unning config for exeriment.py
 
 #Parameter documentation
