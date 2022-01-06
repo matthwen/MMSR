@@ -79,6 +79,9 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
         # results = cross_validate(self.model, self.X_train, self.y_train, cv=cv, scoring=scorer, return_train_score=True)
         kf = KFold(shuffle=True)
         scores = []
+        precisions = []
+        recalls = []
+        maes = []
         i = 1
         X = self.X_train
         y = self.y_train
@@ -94,9 +97,13 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
 
                 # score = scorer(y_pred, y_test)
                 score = metrics.f1_score(y_pred, y_test, average='weighted', zero_division=0)
+                precisions.append(metrics.precision_score(y_pred, y_test, average='weighted', zero_division=0))
+                recalls.append(metrics.recall_score(y_pred, y_test, average='weighted', zero_division=0))
             else:
                 y_pred = clf.predict(X_test)
-                score = metrics.mean_squared_error(y_pred, y_test)
+                score = metrics.mean_squared_error(y_pred, y_test, squared=False)
+                maes.append(metrics.mean_absolute_error(y_pred, y_test))
+
             scores.append(score)
             print(score)
             i += 1
@@ -105,7 +112,9 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
         # train_scores = results["train_score"]
 
         scores = np.array(scores)
-        train_scores = np.array([])
+        precisions = np.array(precisions)
+        recalls = np.array(recalls)
+        maes = np.array(maes)
         if self.features is None and type(self.X_test) is pd.DataFrame:
             self.features = self.X_train.columns.tolist()
         if print_results:
@@ -116,10 +125,14 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
                 real_model = params["estimator"].model_name
                 params = params["estimator__param_dict"]
                 params["estimator"] = real_model
-
-            filename = utils._print_results(self.model_name, params, self.features, scores,
-                                            scores.mean(),
-                                            scores.std(), scoring)
+            if not regression:
+                filename = utils._print_results(self.model_name, params, self.features, scores,
+                                                scores.mean(), scores.std(), scoring, precisions, precisions.mean(),
+                                                precisions.std(), recalls, recalls.mean(), recalls.std())
+            else:
+                filename = utils._print_results(self.model_name, params, self.features, scores,
+                                                scores.mean(), scores.std(), scoring, maes=maes, mae=maes.mean(),
+                                                mae_std=maes.std())
             # filename = utils._print_results(self.model_name, params, self.features, scores,
             #                                 scores.mean(),
             #                                 scores.std(), scoring, train_scores, train_scores.mean(),

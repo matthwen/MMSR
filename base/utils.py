@@ -28,7 +28,7 @@ def get_wrapper(model, multi_output):
 
 
 def get_result_folder_for_model(model_name):
-    return os.path.join(os.path.dirname(__file__),".." ,"results", model_name)
+    return os.path.join(os.path.dirname(__file__), "..", "results", model_name)
 
 
 def get_features_labels(data, drop_va=True, drop_mm=True):
@@ -248,16 +248,22 @@ def get_predictions_network(model: torch.nn.Module, data_loader: torch.utils.dat
 
 
 def _print_results(model_name: str = "Name", params: dict = {}, features: list = None, scores=None, score=None,
-                   score_std=None, scoring=None, train_scores=None, train_score=None,
-                   train_score_std=None):
+                   score_std=None, scoring=None, precisions=None, precision=None,
+                   precisions_std=None, recalls=None, recall=None, recall_std=None, maes=None, mae=None, mae_std=None):
     # todo: maybe enable derived functions in subclasses to input their own dict
     if isinstance(scores, np.ndarray):
         scores = scores.tolist()
-    if isinstance(train_scores, np.ndarray):
-        train_scores = train_scores.tolist()
+    if isinstance(recalls, np.ndarray):
+        recalls = recalls.tolist()
+    if isinstance(precisions, np.ndarray):
+        precisions = precisions.tolist()
+    if isinstance(maes, np.ndarray):
+        maes = maes.tolist()
     results = {"params": params, "scoring_method": scoring, "scores": scores, "score": score,
-               "score_std": score_std, "train_scores": train_scores, "train_score": train_score,
-               "train_score_std": train_score_std, "features": features}
+               "score_std": score_std, "precisions": precisions, "precision": precision,
+               "precision_std": precisions_std, "recalls": recalls, "recall": recall,
+               "recall_std": recall_std, "mean_absolute_errors": maes, "mae": mae,
+               "mae_std": mae_std, "features": features}
     json_string = json.dumps(results, indent=4)
     target_folder = get_result_folder_for_model(model_name)
     if not os.path.exists(target_folder):
