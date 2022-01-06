@@ -94,13 +94,14 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
             clf = self.model
             clf.fit(X_train, y_train)
             if not regression:
-                y_pred = clf.predict_proba(X_test) >= proba_threshold
+                pred_proba = clf.predict_proba(X_test)
+                y_pred = pred_proba >= proba_threshold
+                for j in range(len(y_pred)):
+                    if (~y_pred[j]).all():
+                        i_max = np.argmax(pred_proba[j])
+                        y_pred[j][i_max] = True
+                        print("no label probability above threshold, using max")
 
-                # score = scorer(y_pred, y_test)
-                # average = "samples"
-                # average = "weighted"
-                # average = "macro"
-                # average = "weighted"
                 average = scoring
                 score = metrics.f1_score(y_test, y_pred, average=average, zero_division=0)
                 precisions.append(metrics.precision_score(y_test, y_pred, average=average, zero_division=0))
