@@ -85,6 +85,7 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
         i = 1
         X = self.X_train
         y = self.y_train
+
         for train_index, test_index in kf.split(X):
             print(f"cross validation run: {i}")
             X_train, X_test = X[train_index], X[test_index]
@@ -96,13 +97,18 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
                 y_pred = clf.predict_proba(X_test) >= proba_threshold
 
                 # score = scorer(y_pred, y_test)
-                score = metrics.f1_score(y_pred, y_test, average='weighted', zero_division=0)
-                precisions.append(metrics.precision_score(y_pred, y_test, average='weighted', zero_division=0))
-                recalls.append(metrics.recall_score(y_pred, y_test, average='weighted', zero_division=0))
+                # average = "samples"
+                # average = "weighted"
+                # average = "macro"
+                # average = "weighted"
+                average = scoring
+                score = metrics.f1_score(y_test, y_pred, average=average, zero_division=0)
+                precisions.append(metrics.precision_score(y_test, y_pred, average=average, zero_division=0))
+                recalls.append(metrics.recall_score(y_test, y_pred, average=average, zero_division=0))
             else:
                 y_pred = clf.predict(X_test)
-                score = metrics.mean_squared_error(y_pred, y_test, squared=False)
-                maes.append(metrics.mean_absolute_error(y_pred, y_test))
+                score = metrics.mean_squared_error(y_test, y_pred, squared=False)
+                maes.append(metrics.mean_absolute_error(y_test, y_pred))
 
             scores.append(score)
             print(score)
@@ -118,8 +124,8 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
         if self.features is None and type(self.X_test) is pd.DataFrame:
             self.features = self.X_train.columns.tolist()
         if print_results:
-            # filename = self._print_results(scores, scores.mean(), scores.std(), scoring, train_scores,
-            #             #                                train_scores.mean(), train_scores.std())
+            # dirty lazy hack
+            scoring = "f1" if regression is False else "rmse"
             params = self.model.get_params()
             if "estimator__param_dict" in params.keys():
                 real_model = params["estimator"].model_name

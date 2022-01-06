@@ -24,7 +24,7 @@ since comments are not a thing in json here is the doc for the config params:
 
 "files_to_merge": list of files you want to be merged (can be empty) with the basic metadata. Use the name of the files specified in "data_files" eg. "vgg_agg" for the aggregated video data (so before you can merge them add the paths to "data_files") ATTENTION: need to be in csv format (for now) and have an "ID" column
 
-"scorer": dead parameter, just ignore at the moment, it always uses f1 (with average="weighted") for genres and mse for popularity
+"scorer": use as "average" parameter ("weighted","micro","macro" or "sample") for classification metrics
 
 "proba_threshold": probabilistic threshold for when a genre is predicted
 
