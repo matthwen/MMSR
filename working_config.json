@@ -16,27 +16,28 @@
     "train_tf_idf_15": "processed_data/tf-idf/train_tf_idf_15.csv",
     "test_tf_idf_15": "processed_data/tf-idf/test_tf_idf_15.csv",
     "train_tf_idf_50": "processed_data/tf-idf/train_tf_idf_50.csv",
-    "test_tf_idf_50": "processed_data/tf-idf/test_tf_idf_50.csv"
+    "test_tf_idf_50": "processed_data/tf-idf/test_tf_idf_50.csv",
+    "train_tf_idf_50_pca_100": "processed_data/tf-idf/train_tf_idf_50_pca_100.csv"
   },
   "files_to_merge": [
-    "train_tf_idf_5",
-    "video_codebook_200",
-    "audio_codebook_100"
+    "video_codebook_100",
+    "audio_codebook_100",
+    "train_tf_idf_50_pca_100"
   ],
-  "scorer": "micro",
-  "proba_threshold": 0.05,
+  "scorer": "weighted",
+  "proba_threshold": 0.1,
   "multi_output": false,
-  "predict_popularity": false,
+  "predict_popularity": true,
   "random_seed": 42,
-  "model": "dummy",
+  "model": "random_forest_regressor",
   "model_params": {
-    "strategy": "prior"
   },
   "scale_metadata": true,
+  "scale_added_data": true,
   "downproject": true,
   "dp_with_metadata": false,
   "downprojection_model": "pca",
   "downprojection_params": {
-    "n_components": 10
+    "n_components": 100
   }
 }

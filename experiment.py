@@ -7,7 +7,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 def main(data_files, files_to_merge, multi_output, scorer, model, model_params, downproject=False,
          downprojection_model=None, downprojection_params={}, dp_with_metadata=False, proba_threshold=0.5,
-         predict_popularity=False, random_seed=None, scale_metadata=False):
+         predict_popularity=False, random_seed=None, scale_metadata=False, scale_added_data=False):
     if random_seed is not None:
         np.random.seed(random_seed)
 
@@ -43,7 +43,11 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
         else:
             X = data_train_add.loc[:, ~data_train_add.columns.isin(["ID"])]
 
+        if scale_added_data:
+            X = StandardScaler().fit_transform(X)
+
         print(f"downprojecting X train with {downprojection_model}")
+
         dp_model = utils.get_model_unsupervised(downprojection_model, downprojection_params)
         X = dp_model.fit_transform(X)
 
