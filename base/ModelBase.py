@@ -58,7 +58,8 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
             filename = self._print_results(score, acc)
         return score, filename
 
-    def cross_validate(self, print_results=True, cv=5, scoring="accuracy", proba_threshold=0.5, regression=False):
+    def cross_validate(self, print_results=True, cv=5, scoring="accuracy", proba_threshold=0.5, regression=False,
+                       data_files=[]):
         # For int/None inputs, if the estimator is a classifier and y is either binary or multiclass,
         # StratifiedKFold is used. In all other cases, Fold is used
         # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html#sklearn.model_selection.cross_validate
@@ -135,11 +136,12 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
             if not regression:
                 filename = utils._print_results(self.model_name, params, self.features, scores,
                                                 scores.mean(), scores.std(), scoring, precisions, precisions.mean(),
-                                                precisions.std(), recalls, recalls.mean(), recalls.std())
+                                                precisions.std(), recalls, recalls.mean(), recalls.std(),
+                                                data_files=data_files)
             else:
                 filename = utils._print_results(self.model_name, params, self.features, scores,
                                                 scores.mean(), scores.std(), scoring, maes=maes, mae=maes.mean(),
-                                                mae_std=maes.std())
+                                                mae_std=maes.std(), data_files=data_files)
             # filename = utils._print_results(self.model_name, params, self.features, scores,
             #                                 scores.mean(),
             #                                 scores.std(), scoring, train_scores, train_scores.mean(),
