@@ -59,7 +59,7 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
         return score, filename
 
     def cross_validate(self, print_results=True, cv=5, scoring="accuracy", proba_threshold=0.5, regression=False,
-                       data_files=[]):
+                       data_files=[], downproject=None, scale_added_data=None, downprojection_model=None, downprojection_params: dict={}):
         # For int/None inputs, if the estimator is a classifier and y is either binary or multiclass,
         # StratifiedKFold is used. In all other cases, Fold is used
         # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html#sklearn.model_selection.cross_validate
@@ -137,11 +137,13 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
                 filename = utils._print_results(self.model_name, params, self.features, scores,
                                                 scores.mean(), scores.std(), scoring, precisions, precisions.mean(),
                                                 precisions.std(), recalls, recalls.mean(), recalls.std(),
-                                                data_files=data_files)
+                                                data_files=data_files, scale_added_data=scale_added_data, downproject=downproject,
+                                                downprojection_model=downprojection_model, downprojection_params=downprojection_params)
             else:
                 filename = utils._print_results(self.model_name, params, self.features, scores,
                                                 scores.mean(), scores.std(), scoring, maes=maes, mae=maes.mean(),
-                                                mae_std=maes.std(), data_files=data_files)
+                                                mae_std=maes.std(), data_files=data_files, scale_added_data=scale_added_data, downproject=downproject,
+                                                downprojection_model=downprojection_model, downprojection_params=downprojection_params)
             # filename = utils._print_results(self.model_name, params, self.features, scores,
             #                                 scores.mean(),
             #                                 scores.std(), scoring, train_scores, train_scores.mean(),
@@ -149,7 +151,8 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
         return scores.mean(), filename
 
     def _print_results(self, scores=None, score=None, score_std=None, scoring=None, train_scores=None, train_score=None,
-                       train_score_std=None):
+                       train_score_std=None, data_files=[], scale_added_data=None, downproject=None, downprojection_model=None,
+                       downprojection_params: dict={}):
         params = self.model.get_params()
         # todo: maybe enable derived functions in subclasses to input their own dict
         if isinstance(scores, np.ndarray):
@@ -158,7 +161,9 @@ class BaseModelSklearn(sklearn.base.BaseEstimator):
             train_scores = train_scores.tolist()
         results = {"params": params, "scoring_method": scoring, "scores": scores, "score": score,
                    "score_std": score_std, "train_scores": train_scores, "train_score": train_score,
-                   "train_score_std": train_score_std, "features": self.features}
+                   "train_score_std": train_score_std, "features": self.features, "data_files": data_files,
+                   "scale_added_data": scale_added_data, "downprojection_model": downprojection_model,
+                   "downprojection_params": downprojection_params}
         json_string = json.dumps(results, indent=4)
         target_folder = utils.get_result_folder_for_model(self.model_name)
         if not os.path.exists(target_folder):

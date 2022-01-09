@@ -251,7 +251,7 @@ def get_predictions_network(model: torch.nn.Module, data_loader: torch.utils.dat
 def _print_results(model_name: str = "Name", params: dict = {}, features: list = None, scores=None, score=None,
                    score_std=None, scoring=None, precisions=None, precision=None,
                    precisions_std=None, recalls=None, recall=None, recall_std=None, maes=None, mae=None, mae_std=None,
-                   data_files=[]):
+                   data_files=[], scale_added_data=None, downproject=None, downprojection_model=None, downprojection_params: dict={}):
     # todo: maybe enable derived functions in subclasses to input their own dict
     if isinstance(scores, np.ndarray):
         scores = scores.tolist()
@@ -265,7 +265,10 @@ def _print_results(model_name: str = "Name", params: dict = {}, features: list =
                "score_std": score_std, "precisions": precisions, "precision": precision,
                "precision_std": precisions_std, "recalls": recalls, "recall": recall,
                "recall_std": recall_std, "mean_absolute_errors": maes, "mae": mae,
-               "mae_std": mae_std, "features": features, "data_files": data_files}
+               "mae_std": mae_std, "features": features, "data_files": data_files,
+               "scale_added_data": scale_added_data, "downproject": downproject,
+               "downprojection_model": downprojection_model,
+               "downprojection_params": downprojection_params}
     json_string = json.dumps(results, indent=4)
     target_folder = get_result_folder_for_model(model_name)
     if not os.path.exists(target_folder):

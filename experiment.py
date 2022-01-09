@@ -83,7 +83,10 @@ def main(data_files, files_to_merge, multi_output, scorer, model, model_params, 
     # Attention: uses predict_proba and just errors if model does not support it
     # TODO ensure class distribution between train and test?
     score, filename = model.cross_validate(scoring=scorer, proba_threshold=proba_threshold,
-                                           regression=predict_popularity, data_files=files_to_merge)
+                                           regression=predict_popularity, data_files=files_to_merge,
+                                           scale_added_data=scale_added_data, downproject=downproject,
+                                           downprojection_model=downprojection_model,
+                                           downprojection_params=downprojection_params)
     print(f"mean cv score: {score}")
     print(f"result file : {filename} ")
 
