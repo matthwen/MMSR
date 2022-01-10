@@ -20,17 +20,21 @@
     "train_tf_idf_50_pca_100": "processed_data/tf-idf/train_tf_idf_50_pca_100.csv"
   },
   "files_to_merge": [
-    "video_codebook_100",
     "audio_codebook_100",
-    "train_tf_idf_50_pca_100"
+    "video_codebook_100"
+  ],
+  "files_to_merge_predict": [
+    "audio_codebook_100",
+    "video_codebook_100"
   ],
   "scorer": "weighted",
-  "proba_threshold": 0.1,
+  "proba_threshold": 0.2,
   "multi_output": false,
-  "predict_popularity": true,
+  "predict_popularity": false,
   "random_seed": 42,
-  "model": "random_forest_regressor",
+  "model": "logistic_regression",
   "model_params": {
+    "max_iter": 10000
   },
   "scale_metadata": true,
   "scale_added_data": true,
@@ -39,5 +43,6 @@
   "downprojection_model": "pca",
   "downprojection_params": {
     "n_components": 100
-  }
+  },
+  "mode": "predict"
 }
